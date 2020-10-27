@@ -99,32 +99,48 @@ namespace ComputerInfo
         }
 
         //依次读取所选文件夹内的所有文件到二维数组，判定文件格式。
-/*        string fileContent = string.Empty;
-        string filePath = string.Empty;
-        private void ReadInfo()
+        //将文件夹里的所有txt文件读入一个list，从list里依次读取文件内容，并将文件名作为字典的一个字段，其余内容依次读入字典
+        //当文件夹内的文件全部读取完毕后，将字典写入Excel。
+
+        string[] file_name;
+        //存储文件夹内所有符合条件的文件名
+        private string[] ReadFileName()
         {
-            //OpenFileDialog openFileDialog = new OpenFileDialog()
+            using (var fbd = new FolderBrowserDialog())
             {
-                this.openFileDialog1.InitialDirectory = "c:\\";
-                this.openFileDialog1.Filter = "txt files (*.txt)|*.txt";
-                this.openFileDialog1.FilterIndex = 2;
-                this.openFileDialog1.RestoreDirectory = true;
+                DialogResult result = fbd.ShowDialog();
 
-                if (openFileDialog1.ShowDialog() == DialogResult.OK)
+                if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
-                    //Get the path of specified file
-                    filePath = this.openFileDialog1.FileName;
-
-                    //Read the contents of the file into a stream
-                    var fileStream = this.openFileDialog1.OpenFile();
-
-                    using (StreamReader reader = new StreamReader(fileStream))
-                    {
-                        fileContent = reader.ReadToEnd();
-                    }
+                    return file_name = Directory.GetFiles(fbd.SelectedPath);
+                }
+                else
+                {
+                    MessageBox.Show("请重新选择正确的文件夹。", "Message");
+                    return null;
                 }
             }
-        }*/
+        }
+        private void ReadInfo()
+        {
+            foreach (string currectFile in file_name)
+            {
+                StreamReader file = new StreamReader(currectFile);
+                while ((file.ReadLine()) != null)
+                {
+                    network["COM_NAME"] = null;
+                    network["IP"] = null;
+                    network["MAC"] = null;
+                    network["OS"] = null;
+                    network["DEPART"] = null;
+                    network["NAME"] = currectFile;
+                    network["LOCATION"] = null;
+                    network["SERIAL"] = null;
+                }
+                file.Close();
+            }
+
+        }
         //按钮事件，保存所有窗口上显示的和用户填入的信息
         private void button1_Click(object sender, EventArgs e)
         {
@@ -156,7 +172,8 @@ namespace ComputerInfo
         //功能待开发
         private void button2_Click(object sender, EventArgs e)
         {
-            this.Close();
+            ReadInfo();
+            //this.Close();
         }
     }
 }
