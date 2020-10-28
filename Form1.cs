@@ -5,6 +5,7 @@ using System.IO;
 using System.Net;
 using System.Net.NetworkInformation;
 using System.Net.Sockets;
+using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 namespace ComputerInfo
@@ -87,7 +88,6 @@ namespace ComputerInfo
         {
             return Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "ProductName", "").ToString() + Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows NT\CurrentVersion", "CurrentBuild", "").ToString();
         }
-
         //获取所有字典需要的信息
         private void GetAll()
         {
@@ -95,9 +95,7 @@ namespace ComputerInfo
             textBox2.Text = network["IP"];
             textBox3.Text = network["MAC"];
             textBox4.Text = network["OS"];
-
         }
-
         //依次读取所选文件夹内的所有文件到二维数组，判定文件格式。
         //将文件夹里的所有txt文件读入一个list，从list里依次读取文件内容，并将文件名作为字典的一个字段，其余内容依次读入字典
         //当文件夹内的文件全部读取完毕后，将字典写入Excel。
@@ -109,7 +107,6 @@ namespace ComputerInfo
             using (var fbd = new FolderBrowserDialog())
             {
                 DialogResult result = fbd.ShowDialog();
-
                 if (result == DialogResult.OK && !string.IsNullOrWhiteSpace(fbd.SelectedPath))
                 {
                     return file_name = Directory.GetFiles(fbd.SelectedPath);
@@ -121,26 +118,37 @@ namespace ComputerInfo
                 }
             }
         }
+
         private void ReadInfo()
         {
+            ReadFileName();
+            string line, str = null;
             foreach (string currectFile in file_name)
             {
                 StreamReader file = new StreamReader(currectFile);
-                while ((file.ReadLine()) != null)
+                while ((line = file.ReadLine()) != null)
                 {
-                    network["COM_NAME"] = null;
-                    network["IP"] = null;
-                    network["MAC"] = null;
-                    network["OS"] = null;
-                    network["DEPART"] = null;
-                    network["NAME"] = currectFile;
-                    network["LOCATION"] = null;
-                    network["SERIAL"] = null;
+                    str = str+line+'\n';
                 }
                 file.Close();
-            }
 
+                Regex regex = new Regex(@"COM_NAME:'(?<COM_NAME>(?<=:).* (?=\n))'\n+IP:'(?<IP>(?<=:).* (?=\n))'\n+MAC:'(?<IP>(?<=:).* (?=\n))'\n+OS:'(?<IP>(?<=:).* (?=\n))'\n+DEPART:'(?<IP>(?<=:).* (?=\n))'\n+NAME:'(?<IP>(?<=:).* (?=\n))'\n+LOCATION:'(?<IP>(?<=:).* (?=\n))'\n+SERIAL:'(?<IP>(?<=:).* (?=\n))'\n", RegexOptions.IgnoreCase);
+                Match match = regex.Match(str);
+                if (match.Success)
+                {
+                    network["COM_NAME"] = match.Groups["userName"].Value;
+                    network["IP"] = match.Groups["IP"].Value;
+                    network["MAC"] = match.Groups["MAC"].Value;
+                    network["OS"] = match.Groups["OS"].Value;
+                    network["DEPART"] = match.Groups["DEPART"].Value;
+                    network["NAME"] = match.Groups["NAME"].Value;
+                    network["LOCATION"] = match.Groups["LOCATION"].Value;
+                    network["SERIAL"] = match.Groups["SERIAL"].Value;
+                }
+            }
         }
+
+
         //按钮事件，保存所有窗口上显示的和用户填入的信息
         private void button1_Click(object sender, EventArgs e)
         {
