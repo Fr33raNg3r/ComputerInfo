@@ -48,6 +48,7 @@
             this.label5 = new System.Windows.Forms.Label();
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
+            this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -73,6 +74,7 @@
             // 
             this.textBox4.Location = new System.Drawing.Point(99, 120);
             this.textBox4.Name = "textBox4";
+            this.textBox4.ReadOnly = true;
             this.textBox4.Size = new System.Drawing.Size(191, 26);
             this.textBox4.TabIndex = 7;
             // 
@@ -90,6 +92,7 @@
             // 
             this.textBox3.Location = new System.Drawing.Point(99, 88);
             this.textBox3.Name = "textBox3";
+            this.textBox3.ReadOnly = true;
             this.textBox3.Size = new System.Drawing.Size(191, 26);
             this.textBox3.TabIndex = 5;
             // 
@@ -106,6 +109,7 @@
             // 
             this.textBox2.Location = new System.Drawing.Point(99, 56);
             this.textBox2.Name = "textBox2";
+            this.textBox2.ReadOnly = true;
             this.textBox2.Size = new System.Drawing.Size(191, 26);
             this.textBox2.TabIndex = 3;
             // 
@@ -122,6 +126,7 @@
             // 
             this.textBox1.Location = new System.Drawing.Point(99, 23);
             this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(191, 26);
             this.textBox1.TabIndex = 1;
             // 
@@ -220,7 +225,7 @@
             // 
             this.button1.Location = new System.Drawing.Point(199, 164);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(85, 26);
+            this.button1.Size = new System.Drawing.Size(85, 27);
             this.button1.TabIndex = 2;
             this.button1.Text = "保存";
             this.button1.UseVisualStyleBackColor = true;
@@ -230,15 +235,27 @@
             // 
             this.button2.Location = new System.Drawing.Point(331, 164);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(85, 26);
+            this.button2.Size = new System.Drawing.Size(85, 27);
             this.button2.TabIndex = 3;
-            this.button2.Text = "关闭";
+            this.button2.Text = "转换";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
+            // 
+            // linkLabel1
+            // 
+            this.linkLabel1.AutoSize = true;
+            this.linkLabel1.Location = new System.Drawing.Point(566, 171);
+            this.linkLabel1.Name = "linkLabel1";
+            this.linkLabel1.Size = new System.Drawing.Size(37, 20);
+            this.linkLabel1.TabIndex = 4;
+            this.linkLabel1.TabStop = true;
+            this.linkLabel1.Text = "关于";
+            this.linkLabel1.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabel1_LinkClicked);
             // 
             // Form1
             // 
             this.ClientSize = new System.Drawing.Size(619, 197);
+            this.Controls.Add(this.linkLabel1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
@@ -248,12 +265,14 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "东北公司计算机信息获取工具";
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -279,6 +298,7 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.LinkLabel linkLabel1;
     }
 }
 

@@ -118,36 +118,33 @@ namespace ComputerInfo
                 }
             }
         }
-
+        //从文件中获取相关信息存入字典，该文件必须是该软件自动生成的格式。否则会出错！！！
         private void ReadInfo()
         {
             ReadFileName();
             string line, str = null;
+            string[] code = { "COM_NAME", "IP", "MAC", "OS", "DEPART", "NAME", "LOCATION", "SERIAL" };
             foreach (string currectFile in file_name)
             {
                 StreamReader file = new StreamReader(currectFile);
+                int capCtr = 0;
                 while ((line = file.ReadLine()) != null)
                 {
-                    str = str+line+'\n';
+                    Regex regex = new Regex(@"(?<=:).*", RegexOptions.IgnoreCase);
+                    Match match = regex.Match(line);
+                    if (match.Success)
+                    {
+                        network[code[capCtr]] = match.Value;
+                        capCtr++;
+                    }
                 }
                 file.Close();
-
-                Regex regex = new Regex(@"COM_NAME:'(?<COM_NAME>(?<=:).* (?=\n))'\n+IP:'(?<IP>(?<=:).* (?=\n))'\n+MAC:'(?<IP>(?<=:).* (?=\n))'\n+OS:'(?<IP>(?<=:).* (?=\n))'\n+DEPART:'(?<IP>(?<=:).* (?=\n))'\n+NAME:'(?<IP>(?<=:).* (?=\n))'\n+LOCATION:'(?<IP>(?<=:).* (?=\n))'\n+SERIAL:'(?<IP>(?<=:).* (?=\n))'\n", RegexOptions.IgnoreCase);
-                Match match = regex.Match(str);
-                if (match.Success)
-                {
-                    network["COM_NAME"] = match.Groups["userName"].Value;
-                    network["IP"] = match.Groups["IP"].Value;
-                    network["MAC"] = match.Groups["MAC"].Value;
-                    network["OS"] = match.Groups["OS"].Value;
-                    network["DEPART"] = match.Groups["DEPART"].Value;
-                    network["NAME"] = match.Groups["NAME"].Value;
-                    network["LOCATION"] = match.Groups["LOCATION"].Value;
-                    network["SERIAL"] = match.Groups["SERIAL"].Value;
-                }
+                str = network["COM_NAME"] + "," + network["IP"] + "," + network["MAC"] + "," + network["OS"] + "," + network["DEPART"] + "," + network["NAME"] + "," + network["LOCATION"] + "," + network["SERIAL"]+"\n";
             }
+            File.WriteAllText(@"E:\新建文件夹\aa.csv", str, System.Text.Encoding.UTF8);
         }
 
+        //将字符串写入文件
 
         //按钮事件，保存所有窗口上显示的和用户填入的信息
         private void button1_Click(object sender, EventArgs e)
@@ -174,7 +171,6 @@ namespace ComputerInfo
             else
             {
                 MessageBox.Show("请在右侧每个输入框里填入你的相关信息！", "警告！！！");
-
             }
         }
         //功能待开发
@@ -182,6 +178,11 @@ namespace ComputerInfo
         {
             ReadInfo();
             //this.Close();
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            MessageBox.Show("东北公司计算机信息获取工具\n版本号:0.1beta\n©重庆高速集团有限公司东北营运分公司", "关于...");
         }
     }
 }
