@@ -139,12 +139,20 @@ namespace ComputerInfo
                     }
                 }
                 file.Close();
-                str += network["COM_NAME"] + "," + network["IP"] + "," + network["MAC"] + "," + network["OS"] + "," + network["DEPART"] + "," + network["NAME"] + "," + network["LOCATION"] + "," + network["SERIAL"]+"\n";
+                if (network["LOCATION"] != null)
+                {
+                    str += network["COM_NAME"] + "," + network["IP"] + "," + network["MAC"] + "," + network["OS"] + "," + network["DEPART"] + "," + network["NAME"] + "," + network["LOCATION"] + "," + network["SERIAL"] + "\n";
+                }
+                else
+                {
+                    network["NAME"] = ExtractFilename(currectFile);
+                    str += network["NAME"] + "," + network["COM_NAME"] + "," + network["IP"] + "," + network["MAC"] + "," + network["OS"] + "," + network["SERIAL"] + "\n";
+                }
             }
-            File.WriteAllText(@"E:\新建文件夹\aa.csv", str, System.Text.Encoding.UTF8);
+            File.WriteAllText(@"aa.csv", str, System.Text.Encoding.UTF8);
         }
 
-        private void ReadInfoLite()
+/*        private void ReadInfoLite()
         {
             ReadFileName();
             string line, str = null;
@@ -167,8 +175,8 @@ namespace ComputerInfo
                 file.Close();
                 str += network["NAME"] + "," + network["COM_NAME"] + "," + network["IP"] + "," + network["MAC"] + "," + network["OS"] + "," + network["SERIAL"] + "\n";
             }
-            File.WriteAllText(@"D:\新建文件夹\aa.csv", str, System.Text.Encoding.UTF8);
-        }
+            File.WriteAllText(@"E:\新建文件夹\aa.csv", str, System.Text.Encoding.UTF8);
+        }*/
 
         //提取文件名
         public static string ExtractFilename(string filepath)
@@ -194,7 +202,7 @@ namespace ComputerInfo
                 // Determine whether file exists using filepath.
                 if (File.Exists(filepath))
                     // Return filename without file path.
-                    return filepath.Substring(position + 1, lastposition- position-1);
+                    return filepath.Substring(position + 1, lastposition - position - 1);
                 else
                     return String.Empty;
             }
@@ -229,10 +237,10 @@ namespace ComputerInfo
         //功能待开发
         private void button2_Click(object sender, EventArgs e)
         {
-            //ReadInfo();
-            ReadInfoLite();
+
+            ReadInfo();
+            //ReadInfoLite();
             MessageBox.Show("转换完成", "恭喜...");
-            //this.Close();
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
