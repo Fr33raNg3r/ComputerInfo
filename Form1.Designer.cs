@@ -33,8 +33,6 @@
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
             this.textBox2 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.textBox3 = new System.Windows.Forms.TextBox();
@@ -49,13 +47,10 @@
             this.label6 = new System.Windows.Forms.Label();
             this.textBox5 = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
-<<<<<<< Updated upstream
-=======
             this.button1 = new System.Windows.Forms.Button();
             this.button2 = new System.Windows.Forms.Button();
             this.linkLabel1 = new System.Windows.Forms.LinkLabel();
             this.label9 = new System.Windows.Forms.Label();
->>>>>>> Stashed changes
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.SuspendLayout();
@@ -109,24 +104,6 @@
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(191, 26);
             this.textBox1.TabIndex = 1;
-            // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(199, 164);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(85, 26);
-            this.button1.TabIndex = 2;
-            this.button1.Text = "保存";
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Location = new System.Drawing.Point(331, 164);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(85, 26);
-            this.button2.TabIndex = 3;
-            this.button2.Text = "关闭";
-            this.button2.UseVisualStyleBackColor = true;
             // 
             // textBox2
             // 
@@ -242,11 +219,10 @@
             this.label5.TabIndex = 8;
             this.label5.Text = "部门";
             // 
-<<<<<<< Updated upstream
             // Form1
             // 
             this.ClientSize = new System.Drawing.Size(619, 197);
-=======
+            //
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(199, 164);
@@ -291,19 +267,15 @@
             this.ClientSize = new System.Drawing.Size(619, 257);
             this.Controls.Add(this.label9);
             this.Controls.Add(this.linkLabel1);
->>>>>>> Stashed changes
             this.Controls.Add(this.button2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-<<<<<<< Updated upstream
-=======
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.MinimizeBox = false;
->>>>>>> Stashed changes
             this.Name = "Form1";
             this.Text = "东北公司计算机信息获取工具";
             this.groupBox1.ResumeLayout(false);
@@ -336,11 +308,8 @@
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button button1;
         private System.Windows.Forms.Button button2;
-<<<<<<< Updated upstream
-=======
         private System.Windows.Forms.LinkLabel linkLabel1;
         private System.Windows.Forms.Label label9;
->>>>>>> Stashed changes
     }
 }
 
