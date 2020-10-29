@@ -222,6 +222,7 @@
             // Form1
             // 
             this.ClientSize = new System.Drawing.Size(619, 197);
+            //
             // button1
             // 
             this.button1.Location = new System.Drawing.Point(199, 164);
