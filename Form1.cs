@@ -139,13 +139,66 @@ namespace ComputerInfo
                     }
                 }
                 file.Close();
-                str = network["COM_NAME"] + "," + network["IP"] + "," + network["MAC"] + "," + network["OS"] + "," + network["DEPART"] + "," + network["NAME"] + "," + network["LOCATION"] + "," + network["SERIAL"]+"\n";
+                str += network["COM_NAME"] + "," + network["IP"] + "," + network["MAC"] + "," + network["OS"] + "," + network["DEPART"] + "," + network["NAME"] + "," + network["LOCATION"] + "," + network["SERIAL"]+"\n";
             }
             File.WriteAllText(@"E:\新建文件夹\aa.csv", str, System.Text.Encoding.UTF8);
         }
 
-        //将字符串写入文件
+        private void ReadInfoLite()
+        {
+            ReadFileName();
+            string line, str = null;
+            string[] code = { "COM_NAME", "IP", "MAC", "OS", "DEPART", "NAME", "LOCATION", "SERIAL" };
+            foreach (string currectFile in file_name)
+            {
+                StreamReader file = new StreamReader(currectFile);
+                int capCtr = 0;
+                while ((line = file.ReadLine()) != null)
+                {
+                    Regex regex = new Regex(@"(?<=:).*", RegexOptions.IgnoreCase);
+                    Match match = regex.Match(line);
+                    if (match.Success)
+                    {
+                        network[code[capCtr]] = match.Value;
+                        capCtr++;
+                    }
+                }
+                network["NAME"] = ExtractFilename(currectFile);
+                file.Close();
+                str += network["NAME"] + "," + network["COM_NAME"] + "," + network["IP"] + "," + network["MAC"] + "," + network["OS"] + "," + network["SERIAL"] + "\n";
+            }
+            File.WriteAllText(@"D:\新建文件夹\aa.csv", str, System.Text.Encoding.UTF8);
+        }
 
+        //提取文件名
+        public static string ExtractFilename(string filepath)
+        {
+            // If path ends with a "\", it's a path only so return String.Empty.
+            if (filepath.Trim().EndsWith(@"\"))
+                return String.Empty;
+
+            // Determine where last backslash is.
+            int position = filepath.LastIndexOf('\\');
+            int lastposition = filepath.LastIndexOf('.');
+            // If there is no backslash, assume that this is a filename.
+            if (position == -1)
+            {
+                // Determine whether file exists in the current directory.
+                if (File.Exists(Environment.CurrentDirectory + Path.DirectorySeparatorChar + filepath))
+                    return filepath;
+                else
+                    return String.Empty;
+            }
+            else
+            {
+                // Determine whether file exists using filepath.
+                if (File.Exists(filepath))
+                    // Return filename without file path.
+                    return filepath.Substring(position + 1, lastposition- position-1);
+                else
+                    return String.Empty;
+            }
+        }
         //按钮事件，保存所有窗口上显示的和用户填入的信息
         private void button1_Click(object sender, EventArgs e)
         {
@@ -176,7 +229,9 @@ namespace ComputerInfo
         //功能待开发
         private void button2_Click(object sender, EventArgs e)
         {
-            ReadInfo();
+            //ReadInfo();
+            ReadInfoLite();
+            MessageBox.Show("转换完成", "恭喜...");
             //this.Close();
         }
 
